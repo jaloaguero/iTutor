@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial','Helvetica', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* == == == CSS variable == == == */
+:root {
+
+    /* == colors == */
+    --primary-color: #14BC7D;
+    --first-color: hsl(244, 75%, 57%);
+    --second-color: hsl(249, 64%, 47%);
+    --title-color: hsl(244, 12%, 12%);
+    --text-color: hsl(244, 4%, 36%);
+    --white-color-one: hsl(208, 97%, 85%);
+
+    /*== font weight == */
+    --font-lightweight: 300;
+    --font-semibold: 500;
+    --font-medium: 600;
+
+    /* == font size == */
+    --normal-fontsize: .938rem;
+    --small-fontsize: .813rem;
+    --smaller-fontsize: .75rem;
+}
+
+
+/* == == responsive typo == == */
+@media screen and (min-width:1024px) {
+    :root {
+        /* font size */
+        --normal-fontsize: 1rem;
+        --small-fontsize: .875rem;
+        --smaller-fontsize: 813rem;
+    }
+}
+
+
+
+.form__container {
+    min-height: 100vh;
+    background: linear-gradient(to top left, #3ECFC5 0%, #BD46CF 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    column-gap: 4rem;
+    padding: 1rem 2rem 4rem 2rem
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: var(--text-color);
+}
+
+h2 span {
+    color: var(--second-color);
+}
+
+.form-content {
+    margin-top: .5rem;
+}
+
+.login__register,
+.login__create {
+    max-width: 24rem;
+    width: 100%;
+    display: grid;
+    position: relative;
+    background-color: hsla(244, 16%, 92%, .6);
+    border: 2px solid hsla(244, 16%, 92%, .75);
+    margin-inline: 1.25rem;
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    animation-duration: .3s;
+    animation-name: login-animate;
+}
+
+@keyframes login-animate {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.1, 1.1);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.form-in {
+    position: relative;
+    display: grid;
+    row-gap: .25rem;
+}
+
+.label-input {
+    display: block;
+    font-size: var(--small-fontsize);
+    color: var(--title-color);
+
+}
+
+.form-input {
+    /* position: relative; */
+    display: grid;
+    width: 100%;
+    padding: .5rem .25rem;
+    border-radius: 5px;
+    border: 2px solid var(--text-color);
+    background-color: hsla(244, 16%, 92%, .6);
+    font-weight: var(--small-fontsize);
+    outline: none;
+    transition: border .4s;
+}
+
+.form-input::placeholder {
+    color: #353537eb;
+}
+
+.form-input:focus,
+.form-input:valid {
+    border: 2px solid var(--second-color);
+}
+
+.sub-btn {
+    display: block;
+    width: 100%;
+    font-size: var(--normal-fontsize);
+    background-color: var(--second-color);
+    color: #ffffff;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    border: 2px solid var(--second-color);
+    cursor: pointer;
+}
+
+.sub-btn:hover {
+    background-color: #ffffff;
+    color: #2b2b2b;
+}
+
+.login-account,
+.login__signin,
+.login__signup {
+    font-size: var(--small-fontsize);
+    font-weight: var(--font-medium);
+}
+
+.login__signin,
+.login__signup {
+    color: var(--first-color);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* SWITCHING LOGIN AND SIGNUP */
+.block {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+/* forget pass  */
+.forget__pass {
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.forget__pass a {
+    color: var(--first-color);
+    font-size: var(--small-fontsize);
+    font-weight: var(--font-lightweight);
+}
+
+/* STRENTH CHECK PROGRESS */
+.progress {
+    padding-top: .25rem;
+}
+
+.progress-bar {
+    height: 3px;
+}
+
+.progress-bar-danger {
+    background-color: #e90f10;
+}
+
+.progress-bar-warning {
+    background-color: #3a3833;
+}
+
+.progress-bar-success {
+    background-color: #02b502;
+}
+
+/* list styles of progress bar */
+.list-unstyled {
+    list-style: none;
+}
+
+.list-unstyled span {
+    font-size: smaller;
+    color: var(--text-color);
+}
+
+.fa-eye {
+    color: #022255;
+    cursor: pointer;
+}
+
+.show-pass {
+    position: absolute;
+    top: 50%;
+    right: 3%;
+}
