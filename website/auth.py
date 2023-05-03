@@ -20,17 +20,48 @@ def login():
     if request.method == 'POST':
         #session.pop() gets rid of user session and replaces it w none
         session.pop('user', None)
+        print("SUPPOSED TO DO SOMETHING HERE")
+        #when login button pressed, login_submit becomes true
+        login_submit = request.form.get("login_submit")
+        #when signup button is pressed, signup_submit becomes true
+        signup_submit = request.form.get("signup_submit")
 
-        input_email = request.form['email']
-        input_password = request.form['password']
 
-        are_credentials_valid = sql_login(input_email, input_password)
+        #login stuff
+        if login_submit is not None:
+            input_email = request.form['email']
+            input_password = request.form['password']
 
-        if are_credentials_valid == True:
-            session['user'] =request.form['email']
-            return redirect(url_for('auth.protected'))
-        
+            are_credentials_valid = sql_login(input_email, input_password)
 
+            if are_credentials_valid == True:
+                session['user'] =request.form['email']
+                return redirect(url_for('auth.protected'))
+            
+        #signup stuff
+        if signup_submit is not None:
+            print("Pressed Signup button")
+            session.pop('user', None)
+
+            #grabs information typed in from html file and saves it
+            full_name = request.form['full_name']
+            age = request.form['age']
+            email = request.form['email']
+            password = request.form['password']
+            #ahh
+            #TODO: put this in its own seperate page, to clean up code and sepearte
+            #also worth noting as of right now this code creates PERSON not student or tutor
+
+            db_raw = get_subjects()
+            age = int(age)
+
+
+            db_raw = get_subjects()
+            #calls sql_signup, and passes information, adds to db
+            sql_signup(full_name, age, email, password)
+
+            #TODO: create a webpage  that basically does this
+            return "Information submitted to database succesfully"
     return render_template("login.html")
 
 
