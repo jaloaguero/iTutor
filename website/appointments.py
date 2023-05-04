@@ -9,13 +9,18 @@ from flask import redirect
 from flask import url_for
 from flask import g
 
-from sql_scripts import get_subjects
-
 appointments = Blueprint('appointments', __name__)
 
 @appointments.route('/appointments')
 def protected():
+    print("got to protected somehow")
     if g.user:
         return render_template('protected.html', user=session['user'])
-        print(get_subjects)
     return redirect(url_for('auth.login'))
+
+
+@appointments.before_request
+def before_request():
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']

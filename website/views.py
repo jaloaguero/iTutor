@@ -10,3 +10,11 @@ views = Blueprint('views', __name__)
 @views.route('/')
 def home():
     return render_template("home.html")
+
+@views.route('/about_us')
+def about_us():
+    return render_template("aboutUs.html")
+
+@views.route('/contact')
+def contact():
+    return render_template("contact.html")

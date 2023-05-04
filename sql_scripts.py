@@ -98,22 +98,3 @@ def sql_signup_tutor(name, age, email, password, description, subject, profile_p
     cur.close()
 
     return 0
-
-
-#calls db, returns all info on subjects
-def get_subjects():
-    cur = mysql.connection.cursor()
-    cur.execute("USE itutordb;")
-    mysql.connection.commit()
-    cur.close()
-
-    #grabs everything from subjecct, returns it thats it
-    cur = mysql.connection.cursor()
-    is_empty = cur.execute("SELECT * FROM itutordb.subject")
-    db_raw = cur.fetchall()
-    mysql.connection.commit()
-    cur.close()
-
-    print("DB RAW IS: " + str(db_raw))
-
-    return db_raw

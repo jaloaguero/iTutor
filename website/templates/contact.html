@@ -1,0 +1,61 @@
+<!--ENTERING CONTACTUS.HTML-->
+{% extends "base.html" %}
+{% block title %}Contact Us - iTutor{% endblock %}
+
+{% block content %}
+
+<div class="formbold-main-wrapper">        
+  <div class="formbold-form-wrapper">
+    <form action="https://formbold.com/s/FORM_ID" method="POST">
+      <div class="formbold-mb-5">
+        <h2 class="mb-5">Contact Us</h2>
+        <label for="name" class="formbold-form-label"> Full Name </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Full Name"
+          class="formbold-form-input"
+        />
+      </div>
+      <div class="formbold-mb-5">
+        <label for="phone" class="formbold-form-label"> Phone Number </label>
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          placeholder="Enter your phone number"
+          class="formbold-form-input"
+        />
+      </div>
+      <div class="formbold-mb-5">
+        <label for="email" class="formbold-form-label"> Email Address </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          class="formbold-form-input"
+        />
+      </div>
+
+
+      <div class="formbold-mb-5">
+        <label for="email" class="formbold-form-label"> Message </label>
+        <textarea
+          type="message"
+          name="message"
+          id="message"
+          placeholder="Write something.."
+          class="formbold-form-input" required></textarea>                  
+      </div>   
+
+    <div>
+    <button class="formbold-btn">Submit</button>
+  </div> 
+</form>
+</div>    
+</div>
+</div>
+
+{% endblock %}
