@@ -48,6 +48,15 @@ def login():
             age = request.form['age']
             email = request.form['email']
             password = request.form['password']
+
+            password_confirm = request.form['password_confirm']
+            student_or_tutor = request.form['account-type']
+            subjects = request.form['subject']
+
+            print("student or tutor looks like: " + str(student_or_tutor))
+
+
+
             #ahh
             #TODO: put this in its own seperate page, to clean up code and sepearte
             #also worth noting as of right now this code creates PERSON not student or tutor
@@ -58,7 +67,7 @@ def login():
 
             db_raw = get_subjects()
             #calls sql_signup, and passes information, adds to db
-            sql_signup(full_name, age, email, password)
+            sql_signup(full_name, age, email, password, student_or_tutor)
 
             #TODO: create a webpage  that basically does this
             return "Information submitted to database succesfully"

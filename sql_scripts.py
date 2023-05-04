@@ -38,19 +38,27 @@ def sql_login(email, password):
 #adds whatever info given to the database
 #TODO: figure out how to give the damn thing pictures
 #TODO: add function to add tutors and students, not just person
-def sql_signup(name, age, email, password):
-    #tells db to use the db, idk dude it doesnt work without this
+def sql_signup(name, age, email, password, student_or_tutor):
+
+    #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
     mysql.connection.commit()
     cur.close()
 
+
+    #Creating a person, because both students and tutors are people
     cur = mysql.connection.cursor()
     #person_id (not needed cuz auto increment), name, age, email, passowrd, complete_hours
     cur.execute("INSERT INTO person values(NULL, %s, %s, %s, %s, 0);",(name, age, email, password))
     mysql.connection.commit()
     cur.close()
-    
+
+    if student_or_tutor == 'student':
+        #here we create a student.
+        print("Creating Student...")
+    else:
+        print("Creating Tutor...")    
 
     return 0
 

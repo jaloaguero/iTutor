@@ -23,6 +23,7 @@ signIn.addEventListener("click", () => {
 })
 
 
+
 let state = false;
 let password = document.getElementById("password");
 let passwordStrength = document.getElementById("password-strength");
@@ -30,6 +31,7 @@ let lowUpperCase = document.querySelector(".low-upper-case i");
 let number = document.querySelector(".one-number i");
 let specialChar = document.querySelector(".one-special-char i");
 let eightChar = document.querySelector(".eight-character i");
+
 
 password.addEventListener("keyup", function () {
     let pass = document.getElementById("password").value;
@@ -82,6 +84,7 @@ function myFunct(show) {
 
 function checkStrength(password) {
     let strength = 0;
+
 
     //If password contains both lower and uppercase characters
     if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
@@ -139,4 +142,13 @@ function checkStrength(password) {
     }
 }
 
-//alert("loaded main.js");
+function showFields() {
+    var accountType = document.getElementById("account-type").value;
+    if (accountType === "student") {
+        document.getElementById("student-fields").style.display = "block";
+        document.getElementById("tutor-fields").style.display = "none";
+    } else {
+        document.getElementById("tutor-fields").style.display = "block";
+        document.getElementById("student-fields").style.display = "none";
+    }
+}

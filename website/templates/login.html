@@ -51,8 +51,8 @@
         <!-- Name -->
         <div class="form-content">
             <div class="form-in">
-                <label for="name" class="label-input">Name</label>
-                <input type="text" id="name" name="" value="" placeholder="Enter Name" required
+                <label for="name" class="label-input">Full Name</label>
+                <input type="text" id="name" name="full_name" value="" placeholder="Enter First and Last Name" required
                     class="form-input">
             </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="form-content">
             <div class="form-in">
                 <label for="age" class="label-input">Age</label>
-                <input type="text" id="age" name="" value="" placeholder="Enter Age" required
+                <input type="text" id="age" name="age" value="" placeholder="Enter Age" required
                     class="form-input">
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="form-content">
             <div class="form-in">
                 <label for="email" class="label-input">Email</label>
-                <input type="text" id="email" name="" value="" placeholder="Enter Email" required
+                <input type="text" id="email" name="email" value="" placeholder="Enter Email" required
                     class="form-input">
             </div>
         </div>           
@@ -122,7 +122,7 @@
         <div class="form-content">
             <div class="form-in">
                 <label for="password2" class="label-input">Re-enter Password</label>
-                <input type="password" id="password2" name="" value="" placeholder="Enter Password Again" required
+                <input type="password" id="password2" name="password_confirm" value="" placeholder="Enter Password Again" required
                     class="form-input">
                 <span class="show-pass" onclick="togglee()">
                     <i class="far fa-eye" onclick="myFunc(this)"></i>
@@ -131,7 +131,7 @@
         </div>
 
         <div class="signup-form">                                            
-                <label for="account-type">Are you Student/Teacher?</label>                 
+                <label for="account-type">Are you Student or Tutor?</label>                 
                 <select id="account-type" name="account-type" onchange="showFields()">            
                     <option value="student">Student</option>
                     <option value="tutor">Tutor</option>
@@ -139,7 +139,7 @@
 
                 <div id="student-fields">
                     <label for="subject">Subject(s):</label>
-                    <select id="subject" name="subject[]" multiple required>
+                    <select id="subject" name="subject" multiple required>
                         <option value="math">Math</option>
                         <option value="science">Science</option>
                         <option value="english">English</option>

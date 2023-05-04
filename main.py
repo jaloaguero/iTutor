@@ -25,4 +25,5 @@ db.init_app(app)
 #init web server.
 if __name__ == '__main__':
     #debug=True means its in debug mode, turn this off once done
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.run(debug=True)
