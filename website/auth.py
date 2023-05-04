@@ -9,7 +9,7 @@ from flask import redirect
 from flask import url_for
 from flask import g
 
-from sql_scripts import sql_signup, sql_login, get_subjects
+from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login, get_subjects
 
 auth = Blueprint('auth', __name__)
 
@@ -20,14 +20,13 @@ def login():
     if request.method == 'POST':
         #session.pop() gets rid of user session and replaces it w none
         session.pop('user', None)
-        print("SUPPOSED TO DO SOMETHING HERE")
         #when login button pressed, login_submit becomes true
         login_submit = request.form.get("login_submit")
         #when signup button is pressed, signup_submit becomes true
         signup_submit = request.form.get("signup_submit")
 
 
-        #login stuff
+        #login
         if login_submit is not None:
             input_email = request.form['email']
             input_password = request.form['password']
@@ -38,7 +37,7 @@ def login():
                 session['user'] =request.form['email']
                 return redirect(url_for('auth.protected'))
             
-        #signup stuff
+        #signup
         if signup_submit is not None:
             print("Pressed Signup button")
             session.pop('user', None)
@@ -48,26 +47,24 @@ def login():
             age = request.form['age']
             email = request.form['email']
             password = request.form['password']
-
+            #grabs signup specific stuff
             password_confirm = request.form['password_confirm']
             student_or_tutor = request.form['account-type']
-            subjects = request.form['subject']
+            #subjects = request.form['tutor-subject']
 
-            print("student or tutor looks like: " + str(student_or_tutor))
-
-
-
-            #ahh
-            #TODO: put this in its own seperate page, to clean up code and sepearte
-            #also worth noting as of right now this code creates PERSON not student or tutor
-
-            db_raw = get_subjects()
             age = int(age)
 
+            #calls studentdatabase thing
+            if student_or_tutor == 'student':
 
-            db_raw = get_subjects()
-            #calls sql_signup, and passes information, adds to db
-            sql_signup(full_name, age, email, password, student_or_tutor)
+                subjects = request.form['subject']
+                sql_signup_student(full_name, age, email, password, subjects)
+
+            if student_or_tutor == 'tutor':
+                description = request.form['description']
+                profile_pic = request.form['avatar']
+                subjects = request.form['tutor-subject']
+                sql_signup_tutor(full_name, age, email, password, description, subjects, profile_pic)
 
             #TODO: create a webpage  that basically does this
             return "Information submitted to database succesfully"
@@ -75,6 +72,7 @@ def login():
 
 
 #fuck it we are gonna assume this is for tutors, deal w choosing later
+#Def is now obsolete, leaving here in case something happens, but pretty sure we will not be using this. 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     #if request = post means its asking for information
@@ -87,7 +85,6 @@ def signup():
         age = request.form['age']
         email = request.form['email']
         password = request.form['password']
-        #ahh
         #TODO: put this in its own seperate page, to clean up code and sepearte
         #also worth noting as of right now this code creates PERSON not student or tutor
 

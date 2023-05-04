@@ -1,5 +1,4 @@
 from flask_mysqldb import MySQL
-
 from database_init import db
 
 mysql = db
@@ -38,7 +37,7 @@ def sql_login(email, password):
 #adds whatever info given to the database
 #TODO: figure out how to give the damn thing pictures
 #TODO: add function to add tutors and students, not just person
-def sql_signup(name, age, email, password, student_or_tutor):
+def sql_signup_student(name, age, email, password, subject):
 
     #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
@@ -54,13 +53,52 @@ def sql_signup(name, age, email, password, student_or_tutor):
     mysql.connection.commit()
     cur.close()
 
-    if student_or_tutor == 'student':
-        #here we create a student.
-        print("Creating Student...")
-    else:
-        print("Creating Tutor...")    
+    print("Creating Student...")
+    #Retrieves the person we have just created's pkey
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT person_id FROM person WHERE email = %s and password = %s;", (email,password))
+    if is_empty == 1:
+        db_raw = cur.fetchall()
+        db_pkey = int(db_raw[0][0])
+        #creates 
+        cur.execute("INSERT INTO student values(%s, NULL, %s);",(db_pkey, subject))
+
+    mysql.connection.commit()
+    cur.close()
 
     return 0
+
+def sql_signup_tutor(name, age, email, password, description, subject, profile_pic):
+
+    #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+
+    #Creating a person, because both students and tutors are people
+    cur = mysql.connection.cursor()
+    #person_id (not needed cuz auto increment), name, age, email, passowrd, complete_hours
+    cur.execute("INSERT INTO person values(NULL, %s, %s, %s, %s, 0);",(name, age, email, password))
+    mysql.connection.commit()
+    cur.close()
+
+    print("Creating Tutor...")
+    #Retrieves the person we have just created's pkey
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT person_id FROM person WHERE email = %s and password = %s;", (email,password))
+    if is_empty == 1:
+        db_raw = cur.fetchall()
+        db_pkey = int(db_raw[0][0])
+        #creates 
+        cur.execute("INSERT INTO tutor values(%s, %s, %s, %s);",(db_pkey, description, subject, profile_pic))
+
+    mysql.connection.commit()
+    cur.close()
+
+    return 0
+
 
 #calls db, returns all info on subjects
 def get_subjects():

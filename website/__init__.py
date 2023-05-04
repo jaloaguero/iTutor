@@ -16,9 +16,12 @@ def create_app():
     #importing to then register
     from .views import views
     from .auth import auth
+    from .appointments import appointments
 
     app.register_blueprint(views,url_prefix='/')
     app.register_blueprint(auth,url_prefix='/')
+    #TODO: maybe lets get a new url prefix for this
+    app.register_blueprint(appointments,url_prefix='/')
     
     
     return app
