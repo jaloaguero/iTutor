@@ -62,7 +62,7 @@ def login():
                 print("Decided that it found the same email")
                 flash('Email already in use!', category='error')
                 return render_template("login.html")
-
+        
             age = int(age)
             print(student_or_tutor)
             #if user chose to be student

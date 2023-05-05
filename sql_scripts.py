@@ -230,6 +230,6 @@ def get_searched_tutors(search):
     
     mysql.connection.commit()
     cur.close()
-    
+    Z
     return db_raw
 
