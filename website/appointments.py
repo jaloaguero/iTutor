@@ -13,7 +13,6 @@ appointments = Blueprint('appointments', __name__)
 
 @appointments.route('/appointments')
 def protected():
-    print("got to protected somehow")
     if g.user:
         return render_template('protected.html', user=session['user'])
     return redirect(url_for('auth.login'))

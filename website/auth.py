@@ -59,26 +59,18 @@ def login():
                 return render_template("login.html")
             
             if is_email_used(email) == True:
+                print("Decided that it found the same email")
                 flash('Email already in use!', category='error')
                 return render_template("login.html")
 
-
-            #TODO: encrypt passwords    
-            #salt = bcrypt.gensalt()
-            # Hash the password using the salt
-            #hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-
-            #turns age to an int, b/c everything from html comes out as string
             age = int(age)
-
+            print(student_or_tutor)
             #if user chose to be student
             if student_or_tutor == 'student':
                 #this was student specifc
                 subjects = request.form['subject']
                 sql_signup_student(full_name, age, email, password, subjects)
-
-            #if user chooses to be a tutor
-            if student_or_tutor == 'tutor':
+            else:
                 #we grab all tutor specific info now, because before we were not sure if it was NULL
                 description = request.form['description']
                 profile_pic = request.form['avatar']

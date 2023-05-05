@@ -106,14 +106,17 @@ def is_email_used(email):
 
     cur = mysql.connection.cursor()
     is_empty = cur.execute("SELECT password FROM itutordb.person WHERE email=%s;",[email] )
-    #if is_empty == 1, means it actually got a result, so we return false
+    #if is_empty == 1, means it actually got a result, so we return true
     if is_empty == 1:
-        return False
+        db_raw = cur.fetchall()
+        print(db_raw)
+        print("Just printed_db_raw")
+        return True
     
     mysql.connection.commit()
     cur.close()
 
-    return True
+    return False
 
 def get_all_tutors():
     cur = mysql.connection.cursor()
@@ -188,6 +191,6 @@ def get_email(pk):
 def get_all_info_tutor(pk):
     db_raw = get_all_tutors()
 
-    
+
 
     return False
