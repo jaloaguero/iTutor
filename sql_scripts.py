@@ -70,6 +70,8 @@ def sql_signup_student(name, age, email, password, subject):
 
 def sql_signup_tutor(name, age, email, password, description, subject, profile_pic):
 
+    
+
     #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
@@ -98,3 +100,24 @@ def sql_signup_tutor(name, age, email, password, description, subject, profile_p
     cur.close()
 
     return 0
+
+def is_email_used(email):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    #Looks for provided email, grabs password associated w it from db.
+    #if it grabs nothing, db_password won't equal password anyways, so it will come back false
+    #that way, we won't know if its the username or password that failed
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT password FROM itutordb.person WHERE email=%s;",[email] )
+    #is_empty saves amount of things i got from cur.execute, i only asked for password so there should only be 1 thing
+
+    if is_empty == 1:
+        return False
+    #grabs everything that i asked for in the execute, and saves it to db_raw
+    mysql.connection.commit()
+    cur.close()
+
+    return True

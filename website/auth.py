@@ -8,26 +8,27 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from flask import g
+from flask import flash
 
-from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login
+from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login, is_email_used
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    #if request = post means its asking for information
-    #so we drop it basically
+
     if request.method == 'POST':
-        #session.pop() gets rid of user session and replaces it w none
+        #session.pop() gets rid of user session and replaces it w none, signs out user.
         session.pop('user', None)
+
         #when login button pressed, login_submit becomes true
         login_submit = request.form.get("login_submit")
         #when signup button is pressed, signup_submit becomes true
         signup_submit = request.form.get("signup_submit")
 
-
         #login
         if login_submit is not None:
+            #b/c we know its login_submit that was pressed, we can get the login specific credentials
             input_email = request.form['email']
             input_password = request.form['password']
 
@@ -39,6 +40,7 @@ def login():
             
         #signup
         if signup_submit is not None:
+            #b/c we know its signup, we can get signup specific credentials
             print("Pressed Signup button")
             session.pop('user', None)
 
@@ -50,24 +52,38 @@ def login():
             #grabs signup specific stuff
             password_confirm = request.form['password_confirm']
             student_or_tutor = request.form['account-type']
-            #subjects = request.form['tutor-subject']
 
+            #checks for passwords matching, and if email is being used
+            if password != password_confirm:
+                flash('Passwords must match.', category='error')
+                return render_template("login.html")
+            
+            if is_email_used(email) == True:
+                flash('Email already in use!', category='error')
+                return render_template("login.html")
+
+            #turns age to an int, b/c everything from html comes out as string
             age = int(age)
 
-            #calls studentdatabase thing
+            #if user chose to be student
             if student_or_tutor == 'student':
-
+                #this was student specifc
                 subjects = request.form['subject']
                 sql_signup_student(full_name, age, email, password, subjects)
 
+            #if user chooses to be a tutor
             if student_or_tutor == 'tutor':
+                #we grab all tutor specific info now, because before we were not sure if it was NULL
                 description = request.form['description']
                 profile_pic = request.form['avatar']
                 subjects = request.form['tutor-subject']
                 sql_signup_tutor(full_name, age, email, password, description, subjects, profile_pic)
 
             #TODO: create a webpage  that basically does this
-            return "Information submitted to database succesfully"
+            flash('Account Created Successfully!', category='success')
+            return render_template("login.html")
+        
+
     return render_template("login.html")
 
 
