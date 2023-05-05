@@ -72,7 +72,7 @@ def login():
                 sql_signup_student(full_name, age, email, password, subjects)
             else:
                 #we grab all tutor specific info now, because before we were not sure if it was NULL
-                description = request.form['description']
+                description = request.files['description']
                 profile_pic = request.form['avatar']
                 subjects = request.form['tutor-subject']
                 sql_signup_tutor(full_name, age, email, password, description, subjects, profile_pic)

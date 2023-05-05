@@ -9,6 +9,8 @@ from sql_scripts import get_all_tutors, get_name, get_age, get_all_tutor_info, g
 
 views = Blueprint('views', __name__)
 
+
+
 #defines route, in this case home = / cuz it goes nowhere. 
 @views.route('/')
 def home():

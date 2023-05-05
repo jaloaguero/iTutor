@@ -75,7 +75,8 @@ def sql_signup_tutor(name, age, email, password, description, subject, profile_p
     mysql.connection.commit()
     cur.close()
 
-
+    print("Profile Pic below")
+    print(profile_pic)
     #Creating a person, because both students and tutors are people
     cur = mysql.connection.cursor()
     #person_id (not needed cuz auto increment), name, age, email, passowrd, complete_hours
@@ -189,30 +190,22 @@ def get_email(pk):
     return email
 
 def get_all_tutor_info():
-    db_raw = get_all_tutors()
-    j=0
-    for i in db_raw:
-        j = j+1
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
 
-    #{name, age, subject, description, picture}
 
-    new_data = [ [0 for i in range(5)]for i in range(j)]
+    cur = mysql.connection.cursor()
+    cur.execute("select * from person JOIN tutor ON person.person_id = tutor.FK_tutor_id ;")
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
 
-    j=0
-    for i in db_raw:
-        #name
-        new_data[j][0] = get_name(db_raw[j][0])
-        #age
-        new_data[j][1] = get_age(db_raw[j][0])
-        #subject
-        new_data[j][2] = db_raw[j][2]
-        #description
-        new_data[j][3] = db_raw[j][1]
-        #picture
-        new_data[j][4] = db_raw[j][3]
-        j = j+1
+    return db_raw
 
-    return new_data
 
 def get_searched_tutors(search):
     cur = mysql.connection.cursor()
@@ -227,9 +220,11 @@ def get_searched_tutors(search):
     cur.execute("select * from person JOIN tutor ON person.person_id = tutor.FK_tutor_id where name like %s;",[search])
     #if is_empty == 1, means it actually got a result, so we return false
     db_raw = cur.fetchall()
+
+    print(db_raw)
     
     mysql.connection.commit()
     cur.close()
-    Z
+
     return db_raw
 
