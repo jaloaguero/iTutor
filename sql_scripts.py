@@ -69,9 +69,6 @@ def sql_signup_student(name, age, email, password, subject):
     return 0
 
 def sql_signup_tutor(name, age, email, password, description, subject, profile_pic):
-
-    
-
     #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
@@ -107,17 +104,90 @@ def is_email_used(email):
     mysql.connection.commit()
     cur.close()
 
-    #Looks for provided email, grabs password associated w it from db.
-    #if it grabs nothing, db_password won't equal password anyways, so it will come back false
-    #that way, we won't know if its the username or password that failed
     cur = mysql.connection.cursor()
     is_empty = cur.execute("SELECT password FROM itutordb.person WHERE email=%s;",[email] )
-    #is_empty saves amount of things i got from cur.execute, i only asked for password so there should only be 1 thing
-
+    #if is_empty == 1, means it actually got a result, so we return false
     if is_empty == 1:
         return False
-    #grabs everything that i asked for in the execute, and saves it to db_raw
+    
     mysql.connection.commit()
     cur.close()
 
     return True
+
+def get_all_tutors():
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT * FROM tutor;")
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+
+    return db_raw
+
+def get_name(pk):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT name FROM person where person_id=%s;",[pk])
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+
+    name = db_raw[0][0]
+
+    return name
+
+def get_age(pk):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT age FROM person where person_id=%s;",[pk])
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+
+    age = db_raw[0][0]
+
+    return age
+
+def get_email(pk):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    is_empty = cur.execute("SELECT email FROM person where person_id=%s;",[pk])
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+
+    email = db_raw[0][0]
+
+    return email
+
+def get_all_info_tutor(pk):
+    db_raw = get_all_tutors()
+
+    
+
+    return False

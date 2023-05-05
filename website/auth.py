@@ -1,6 +1,4 @@
 #for all pages that have to do w user authentication (login/signup)
-
-#TODO: once u figure it out, clean up code, and move all code w sql to a different file
 from flask import Blueprint
 from flask import render_template
 from flask import request
@@ -9,6 +7,8 @@ from flask import redirect
 from flask import url_for
 from flask import g
 from flask import flash
+
+#import bcrypt
 
 from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login, is_email_used
 
@@ -61,6 +61,12 @@ def login():
             if is_email_used(email) == True:
                 flash('Email already in use!', category='error')
                 return render_template("login.html")
+
+
+            #TODO: encrypt passwords    
+            #salt = bcrypt.gensalt()
+            # Hash the password using the salt
+            #hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
 
             #turns age to an int, b/c everything from html comes out as string
             age = int(age)
