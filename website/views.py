@@ -5,11 +5,10 @@ from flask import Blueprint
 from flask import render_template
 from flask import request
 
-from sql_scripts import get_all_tutors, get_name, get_age, get_all_tutor_info, get_searched_tutors
+
+from sql_scripts import get_all_tutor_info, get_searched_tutors
 
 views = Blueprint('views', __name__)
-
-
 
 #defines route, in this case home = / cuz it goes nowhere. 
 @views.route('/')

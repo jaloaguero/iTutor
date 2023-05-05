@@ -1,4 +1,6 @@
 #for all pages that have to do w user authentication (login/signup)
+import os
+
 from flask import Blueprint
 from flask import render_template
 from flask import request
@@ -8,9 +10,14 @@ from flask import url_for
 from flask import g
 from flask import flash
 
+from flask import current_app
+
 #import bcrypt
 
 from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login, is_email_used
+
+from werkzeug.utils import secure_filename
+import uuid
 
 auth = Blueprint('auth', __name__)
 
@@ -72,10 +79,20 @@ def login():
                 sql_signup_student(full_name, age, email, password, subjects)
             else:
                 #we grab all tutor specific info now, because before we were not sure if it was NULL
-                description = request.files['description']
-                profile_pic = request.form['avatar']
+                description = request.form['description']
                 subjects = request.form['tutor-subject']
-                sql_signup_tutor(full_name, age, email, password, description, subjects, profile_pic)
+                pic_filename = "M-teacher1.PNG"
+                if 'avatar' in request.files == False:
+                    pic_filename = "M-teacher1.PNG"
+                else:
+                    profile_pic = request.files['avatar']
+                    pic_filename = secure_filename(profile_pic.filename)
+                    pic_filename = str(uuid.uuid1()) + "_" +pic_filename
+
+                    profile_pic.save(os.path.join(current_app.config['UPLOAD_FOLDER'], pic_filename))
+
+
+                sql_signup_tutor(full_name, age, email, password, description, subjects, pic_filename)
 
             #TODO: create a webpage  that basically does this
             flash('Account Created Successfully!', category='success')

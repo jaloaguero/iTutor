@@ -13,7 +13,7 @@ def create_app():
 
     app.config['SECRET_KEY'] = os.urandom(24)
 
-    #importing to then register
+    #importing to then register 
     from .views import views
     from .auth import auth
     from .appointments import appointments

@@ -46,7 +46,7 @@
 
 
     <!-- todo register form -->
-    <form action="/login" class="login__create none" id="login-up" method="POST">
+    <form action="/login" class="login__create none" id="login-up" method="POST" enctype="multipart/form-data">
         <h2><span>Sign</span>-Up</h2>
         <!-- Name -->
         <div class="form-content">
@@ -151,7 +151,8 @@
                     <label for="description">Description:</label>
                     <textarea id="description" name="description"></textarea>
 
-                    <label for="picture">Picture Upload:</label>                                                  
+                    <label for="picture">Picture Upload:</label>         
+
                     <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">          
                     <label for="tutor-subject">Subject:</label>
                     <select id="tutor-subject" name="tutor-subject">
