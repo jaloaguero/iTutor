@@ -188,9 +188,48 @@ def get_email(pk):
 
     return email
 
-def get_all_info_tutor(pk):
+def get_all_tutor_info():
     db_raw = get_all_tutors()
+    j=0
+    for i in db_raw:
+        j = j+1
 
+    #{name, age, subject, description, picture}
 
+    new_data = [ [0 for i in range(5)]for i in range(j)]
 
-    return False
+    j=0
+    for i in db_raw:
+        #name
+        new_data[j][0] = get_name(db_raw[j][0])
+        #age
+        new_data[j][1] = get_age(db_raw[j][0])
+        #subject
+        new_data[j][2] = db_raw[j][2]
+        #description
+        new_data[j][3] = db_raw[j][1]
+        #picture
+        new_data[j][4] = db_raw[j][3]
+        j = j+1
+
+    return new_data
+
+def get_searched_tutors(search):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    search = '%'+search+'%'
+
+    cur = mysql.connection.cursor()
+    search = '%'+search+'%'
+    cur.execute("select * from person JOIN tutor ON person.person_id = tutor.FK_tutor_id where name like %s;",[search])
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+    
+    return db_raw
+

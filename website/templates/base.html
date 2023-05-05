@@ -89,9 +89,9 @@
                                                
                       
                         </ul>
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search for Tutors" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">SEARCH</button>                    
+                        <form action="/search_results" class="d-flex" role="search" method="POST">
+                            <input class="form-control me-2" type="search" name="user_search" placeholder="Search for Tutors" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" name="search_submit">SEARCH</button>                    
                         </form>
                     </div>
                 </div>
