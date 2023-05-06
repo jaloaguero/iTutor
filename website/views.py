@@ -34,3 +34,12 @@ def search_results():
         user_input_name = request.form['user_search']
         new_data = get_searched_tutors(user_input_name)
         return render_template("tutor_search.html", data=new_data)
+    
+@views.route('/appointments')
+def appointments():
+
+    return render_template("appointment.html")
+
+@views.route("/confirmation", methods=['GET','POST'])
+def confirmation():
+    return render_template("success.html")

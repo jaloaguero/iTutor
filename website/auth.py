@@ -38,10 +38,10 @@ def login():
             input_password = request.form['password']
 
             are_credentials_valid = sql_login(input_email, input_password)
-
+            print("Credentials valid are: " + str(are_credentials_valid))
             if are_credentials_valid == True:
                 session['user'] =request.form['email']
-                return redirect(url_for('appointments.protected'))
+                return redirect(url_for('appointments.profile'))
             
         #signup
         if signup_submit is not None:

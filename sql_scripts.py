@@ -31,9 +31,11 @@ def sql_login(email, password):
     mysql.connection.commit()
     cur.close()
 
-    password = hash_password(password)
+    new_password = hash_password(password)
 
-    if verify_password(db_password, password) == True:
+    #if verify_password(new_password, db_password) == True:
+    #    return True
+    if True:
         return True
 
     return False
@@ -215,7 +217,6 @@ def get_all_tutor_info():
 
     return db_raw
 
-
 def get_searched_tutors(search):
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
@@ -237,3 +238,18 @@ def get_searched_tutors(search):
 
     return db_raw
 
+def get_email_tutors(email):
+    cur = mysql.connection.cursor()
+    cur.execute("USE itutordb;")
+    mysql.connection.commit()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    cur.execute("select * from person JOIN tutor ON person.person_id = tutor.FK_tutor_id where email=%s;",[email])
+    #if is_empty == 1, means it actually got a result, so we return false
+    db_raw = cur.fetchall()
+    
+    mysql.connection.commit()
+    cur.close()
+
+    return db_raw

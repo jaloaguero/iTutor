@@ -9,12 +9,18 @@ from flask import redirect
 from flask import url_for
 from flask import g
 
+from sql_scripts import get_email_tutors
+
 appointments = Blueprint('appointments', __name__)
 
-@appointments.route('/appointments')
-def protected():
+@appointments.route('/profile')
+def profile():
     if g.user:
-        return render_template('protected.html', user=session['user'])
+         new_data = get_email_tutors(g.user)
+         print("NEW DATA: ")
+         print(new_data)
+         return render_template("profile.html", data=new_data)
+
     return redirect(url_for('auth.login'))
 
 
