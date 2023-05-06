@@ -10,7 +10,7 @@ mysql = db
 def sql_login(email, password):
     #declaring db_password up here and making it empty so it can be called later
     #declaring empty because an empty password CANNOT BE PASSED from above
-    db_password = ""
+    db_password = "notreal"
     #tells db to use the db, idk dude it doesnt work without this
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
@@ -30,6 +30,8 @@ def sql_login(email, password):
     #grabs everything that i asked for in the execute, and saves it to db_raw
     mysql.connection.commit()
     cur.close()
+
+    password = hash_password(password)
 
     if verify_password(db_password, password) == True:
         return True
