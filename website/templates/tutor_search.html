@@ -14,7 +14,7 @@
 {% for item in data %}
       <div class="col-md-3">
         <div class="card">
-          <img src="{{item[9]}}" alt="Profile Pic Here" class="card-img-top">
+          <img src="./static/images/profile_pics/{{item[9]}}" alt="Profile Pic Here" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">Name: {{item[1]}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Expertise: {{item[8]}}</h6>
@@ -22,7 +22,7 @@
 
             <p class="card-text">About Me</p>
             <p> {{item[7]}} </p>
-            <a href="#" class="btn btn-primary">View Profile</a>
+            <a href="#" class="btn btn-primary">Make an Appointment</a>
           </div>
         </div>
       </div>

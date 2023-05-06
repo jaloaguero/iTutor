@@ -12,8 +12,6 @@ from flask import flash
 
 from flask import current_app
 
-#import bcrypt
-
 from sql_scripts import sql_signup_student, sql_signup_tutor, sql_login, is_email_used
 
 from werkzeug.utils import secure_filename

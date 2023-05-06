@@ -1,6 +1,8 @@
 from flask_mysqldb import MySQL
 from database_init import db
 
+from hash_passwords import hash_password, verify_password
+
 mysql = db
 
 #checks if user exists, and if password matches, returns bool
@@ -29,7 +31,7 @@ def sql_login(email, password):
     mysql.connection.commit()
     cur.close()
 
-    if db_password == password:
+    if verify_password(db_password, password) == True:
         return True
 
     return False
@@ -38,6 +40,9 @@ def sql_login(email, password):
 #TODO: figure out how to give the damn thing pictures
 #TODO: add function to add tutors and students, not just person
 def sql_signup_student(name, age, email, password, subject):
+
+    #hashes password
+    password = hash_password(password)
 
     #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
@@ -69,14 +74,16 @@ def sql_signup_student(name, age, email, password, subject):
     return 0
 
 def sql_signup_tutor(name, age, email, password, description, subject, profile_pic):
+
+    #hashes password
+    password = hash_password(password)
+
     #tells db to use the db, idk dude i shouldn't need this but it doesnt work without this
     cur = mysql.connection.cursor()
     cur.execute("USE itutordb;")
     mysql.connection.commit()
     cur.close()
-
-    print("Profile Pic below")
-    print(profile_pic)
+    
     #Creating a person, because both students and tutors are people
     cur = mysql.connection.cursor()
     #person_id (not needed cuz auto increment), name, age, email, passowrd, complete_hours
